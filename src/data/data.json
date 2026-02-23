@@ -1,0 +1,140 @@
+{
+    "warehouses": [
+        {
+            "warehouseId": "WH-001",
+            "stock": 500
+        },
+        {
+            "warehouseId": "WH-002",
+            "stock": 300
+        },
+        {
+            "warehouseId": "WH-000",
+            "stock": null,
+            "note": "Any warehouse"
+        }
+    ],
+    "suppliers": [
+        {
+            "supplierId": "SP-001",
+            "stock": 400
+        },
+        {
+            "supplierId": "SP-000",
+            "stock": null,
+            "note": "Any supplier"
+        }
+    ],
+    "prices": [
+        {
+            "itemId": "Item-1",
+            "supplierId": "SP-001",
+            "basePrice": 123.49,
+            "tiers": [
+                {
+                    "priceTier": "EMERGENCY",
+                    "percentage": 120
+                },
+                {
+                    "priceTier": "OVER_DUE",
+                    "percentage": 100
+                },
+                {
+                    "priceTier": "DAILY",
+                    "percentage": 90
+                }
+            ]
+        },
+        {
+            "itemId": "Item-1",
+            "supplierId": "SP-000",
+            "basePrice": 98.75,
+            "tiers": [
+                {
+                    "priceTier": "OVER_DUE",
+                    "percentage": 100
+                },
+                {
+                    "priceTier": "DAILY",
+                    "percentage": 90
+                }
+            ]
+        }
+    ],
+    "customers": [
+        {
+            "customerId": "CT-0001",
+            "creditLimit": 50000,
+            "usedCredit": 0
+        },
+        {
+            "customerId": "CT-0002",
+            "creditLimit": 80000,
+            "usedCredit": 0
+        }
+    ],
+    "orders": [
+        {
+            "orderId": "ORDER-0001",
+            "subOrders": [
+                {
+                    "subOrderId": "ORDER-0001-001",
+                    "itemId": "Item-1",
+                    "warehouseId": "WH-001",
+                    "supplierId": "SP-001",
+                    "requestQty": 11,
+                    "type": "DAILY",
+                    "createDate": "2025-01-01",
+                    "customerId": "CT-0001",
+                    "remark": "",
+                    "allocated": 0,
+                    "status": "UNALLOCATED"
+                },
+                {
+                    "subOrderId": "ORDER-0001-002",
+                    "itemId": "Item-2",
+                    "warehouseId": "WH-002",
+                    "supplierId": "SP-000",
+                    "requestQty": 20,
+                    "type": "DAILY",
+                    "createDate": "2025-01-05",
+                    "customerId": "CT-0001",
+                    "remark": "",
+                    "allocated": 0,
+                    "status": "UNALLOCATED"
+                }
+            ]
+        },
+        {
+            "orderId": "ORDER-0002",
+            "subOrders": [
+                {
+                    "subOrderId": "ORDER-0002-001",
+                    "itemId": "Item-1",
+                    "warehouseId": "WH-001",
+                    "supplierId": "SP-001",
+                    "requestQty": 300,
+                    "type": "EMERGENCY",
+                    "createDate": "2025-03-01",
+                    "customerId": "CT-0002",
+                    "remark": "Special for VIP",
+                    "allocated": 0,
+                    "status": "UNALLOCATED"
+                },
+                {
+                    "subOrderId": "ORDER-0002-002",
+                    "itemId": "Item-2",
+                    "warehouseId": "WH-000",
+                    "supplierId": "SP-000",
+                    "requestQty": 100,
+                    "type": "EMERGENCY",
+                    "createDate": "2025-03-01",
+                    "customerId": "CT-0002",
+                    "remark": "Special for VIP",
+                    "allocated": 0,
+                    "status": "UNALLOCATED"
+                }
+            ]
+        }
+    ]
+}
