@@ -1,73 +1,91 @@
-# React + TypeScript + Vite
+# 🐟 Salmon Allocation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ระบบจัดสรรคำสั่งซื้อปลาแซลมอน (Salmon Order Allocation System) — เว็บแอปสำหรับจัดการและจัดสรรคำสั่งซื้อแซลมอนไปยังคลังสินค้าและซัพพลายเออร์โดยอัตโนมัติ
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [https://puenyim.github.io/salmon-allocation/](https://puenyim.github.io/salmon-allocation/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## React Compiler
+- **React 19** + **TypeScript** — UI framework
+- **Vite** — Build tool & dev server
+- **Tailwind CSS 4** — Styling
+- **Zustand** — State management
+- **react-i18next** — Internationalization (🇹🇭 TH / 🇬🇧 EN)
+- **Vitest** — Unit testing & coverage
+- **GitHub Actions** — CI/CD pipeline
+- **GitHub Pages** — Deployment
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js >= 18
+- npm
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/puenyim/salmon-allocation.git
+cd salmon-allocation
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Build
+
+```bash
+npm run build
+```
+
+### Testing
+
+```bash
+# Run tests
+npm run test
+
+# Run tests with UI
+npm run test:ui
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+### Linting
+
+```bash
+npm run lint
+npm run lint:fix
+```
+
+## Project Structure
+
+```
+src/
+├── components/       # React components
+│   ├── LanguageSwitcher.tsx
+│   ├── ManualAllocateModal.tsx
+│   ├── OrderTable.tsx
+│   ├── SummaryBar.tsx
+│   └── Toolbar.tsx
+├── store/            # Zustand stores
+│   ├── allocationStore.ts
+│   └── useLanguageStore.ts
+├── data/             # Mock data
+├── locales/          # i18n translations (en, th)
+├── types/            # TypeScript types
+├── App.tsx           # Main app component
+└── main.tsx          # Entry point
+```
+
+## Deployment
+
+Deploy to GitHub Pages:
+
+```bash
+npm run deploy
 ```
