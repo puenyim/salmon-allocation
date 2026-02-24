@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { useAllocationStore } from "../store/allocationStore";
 
 export function SummaryBar() {
     const { orders, warehouses, customers } = useAllocationStore();
+    const { t } = useTranslation();
 
     const allSubs = orders.flatMap((o) => o.subOrders);
     const total = allSubs.length;
@@ -19,24 +21,24 @@ export function SummaryBar() {
             {/* Main Stats */}
             <div className="card flex-1 p-4 flex gap-4 overflow-x-auto min-w-0">
                 <div className="flex flex-col items-center justify-center p-3 px-6 bg-slate-50 rounded-xl border border-slate-100 min-w-fit flex-1">
-                    <span className="text-sm font-semibold text-slate-500 mb-1">ทั้งหมด </span>
+                    <span className="text-sm font-semibold text-slate-500 mb-1">{t("total")}</span>
                     <span className="text-3xl font-bold text-slate-800">{total}</span>
                 </div>
                 <div className="w-px bg-slate-200 shrink-0 my-2" />
                 <div className="flex flex-col items-center justify-center p-3 px-6 bg-green-50 rounded-xl border border-green-100 w-full min-w-[120px] flex-1">
-                    <span className="text-sm font-semibold text-green-600 mb-1">จัดสรรแล้ว</span>
+                    <span className="text-sm font-semibold text-green-600 mb-1">{t("allocated")}</span>
                     <span className="text-3xl font-bold text-green-700">{allocated}</span>
                 </div>
                 <div className="flex flex-col items-center justify-center p-3 px-6 bg-amber-50 rounded-xl border border-amber-100 w-full min-w-[120px] flex-1">
-                    <span className="text-sm font-semibold text-amber-600 mb-1">บางส่วน</span>
+                    <span className="text-sm font-semibold text-amber-600 mb-1">{t("partial")}</span>
                     <span className="text-3xl font-bold text-amber-700">{partial}</span>
                 </div>
                 <div className="flex flex-col items-center justify-center p-3 px-6 bg-gray-50 rounded-xl border border-gray-200 w-full min-w-[120px] flex-1">
-                    <span className="text-sm font-semibold text-gray-500 mb-1">ยังไม่จัดสรร</span>
+                    <span className="text-sm font-semibold text-gray-500 mb-1">{t("unallocated")}</span>
                     <span className="text-3xl font-bold text-gray-700">{unallocated}</span>
                 </div>
                 <div className="flex flex-col items-center justify-center p-3 px-6 bg-rose-50 rounded-xl border border-rose-100 w-full min-w-[120px] flex-1">
-                    <span className="text-sm font-semibold text-rose-600 mb-1">เกิน Credit</span>
+                    <span className="text-sm font-semibold text-rose-600 mb-1">{t("exceeded")}</span>
                     <span className="text-3xl font-bold text-rose-700">{exceeded}</span>
                 </div>
             </div>

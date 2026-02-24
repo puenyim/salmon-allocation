@@ -100,6 +100,7 @@ interface AllocationState {
     logs: AllocationLog[];
     isAutoAllocating: boolean;
     autoAllocateDone: boolean;
+    disabledButton: boolean;
     searchQuery: string;
     filterType: string;
     filterStatus: string;
@@ -124,6 +125,7 @@ export const useAllocationStore = create<AllocationState>((set, get) => ({
     logs: [],
     isAutoAllocating: false,
     autoAllocateDone: false,
+    disabledButton: false,
     searchQuery: "",
     filterType: "ALL",
     filterStatus: "ALL",
@@ -131,7 +133,7 @@ export const useAllocationStore = create<AllocationState>((set, get) => ({
     pageSize: 20,
 
     runAutoAllocation: () => {
-        set({ isAutoAllocating: true, logs: [], autoAllocateDone: false });
+        set({ isAutoAllocating: true, logs: [], autoAllocateDone: false, disabledButton: true });
 
         setTimeout(() => {
             const state = get();
@@ -276,6 +278,7 @@ export const useAllocationStore = create<AllocationState>((set, get) => ({
                 logs,
                 isAutoAllocating: false,
                 autoAllocateDone: true,
+                disabledButton: true,
             });
         }, 900);
     },
@@ -362,6 +365,7 @@ export const useAllocationStore = create<AllocationState>((set, get) => ({
             customers: JSON.parse(JSON.stringify(mockData.customers)),
             logs: [],
             autoAllocateDone: false,
+            disabledButton: false,
         }),
 
     getFilteredSubOrders: () => {

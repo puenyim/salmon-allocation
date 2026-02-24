@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAllocationStore, type SubOrder } from "../store/allocationStore";
 import { ManualAllocateModal } from "./ManualAllocateModal";
+import { useTranslation } from "react-i18next";
 
 const TYPE_COLOR: Record<string, { bg: string; text: string; border: string }> = {
     EMERGENCY: { bg: "#fee2e2", text: "#dc2626", border: "#fca5a5" },
@@ -8,15 +9,7 @@ const TYPE_COLOR: Record<string, { bg: string; text: string; border: string }> =
     DAILY: { bg: "#dcfce7", text: "#16a34a", border: "#86efac" },
 };
 
-const STATUS_CONFIG: Record<
-    string,
-    { label: string; bg: string; text: string }
-> = {
-    UNALLOCATED: { label: "ยังไม่จัดสรร", bg: "#f3f4f6", text: "#6b7280" },
-    PARTIAL: { label: "บางส่วน", bg: "#fff7ed", text: "#c2410c" },
-    ALLOCATED: { label: "จัดสรรแล้ว", bg: "#f0fdf4", text: "#15803d" },
-    CREDIT_EXCEEDED: { label: "เกิน Credit", bg: "#fdf2f8", text: "#9d174d" },
-};
+
 
 export function OrderTable() {
     const { getFilteredSubOrders, currentPage, pageSize, setCurrentPage } =
@@ -29,6 +22,7 @@ export function OrderTable() {
     const totalPages = Math.ceil(all.length / pageSize);
     const start = (currentPage - 1) * pageSize;
     const pageData = all.slice(start, start + pageSize);
+    const { t } = useTranslation();
 
     const renderPagination = () => {
         const pages: (number | "...")[] = [];
@@ -48,12 +42,21 @@ export function OrderTable() {
         }
         return pages;
     };
+    const STATUS_CONFIG: Record<
+        string,
+        { label: string; bg: string; text: string }
+    > = {
+        UNALLOCATED: { label: t("unallocated"), bg: "#f3f4f6", text: "#6b7280" },
+        PARTIAL: { label: t("partial"), bg: "#fff7ed", text: "#c2410c" },
+        ALLOCATED: { label: t("allocated"), bg: "#f0fdf4", text: "#15803d" },
+        CREDIT_EXCEEDED: { label: t("creditExceeded"), bg: "#fdf2f8", text: "#9d174d" },
+    };
 
     if (all.length === 0) {
         return (
             <div className="card p-12 flex flex-col items-center justify-center text-center">
                 <div className="text-6xl mb-4 opacity-50 drop-shadow-sm">🔍</div>
-                <p className="text-lg text-slate-500 font-medium">ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหา</p>
+                <p className="text-lg text-slate-500 font-medium">{t("notFoundOrders")}</p>
             </div>
         );
     }
@@ -64,20 +67,20 @@ export function OrderTable() {
                 <table className="w-full text-left border-collapse min-w-[1300px]">
                     <thead>
                         <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider text-slate-500 font-bold sticky top-0 z-10 shadow-sm">
-                            <th className="py-4 px-5 font-semibold">Order ID</th>
-                            <th className="py-4 px-5 font-semibold">Sub Order ID</th>
-                            <th className="py-4 px-5 font-semibold">Item</th>
-                            <th className="py-4 px-5 font-semibold">ประเภท</th>
-                            <th className="py-4 px-5 font-semibold">Warehouse</th>
-                            <th className="py-4 px-5 font-semibold">Supplier</th>
-                            <th className="py-4 px-5 font-semibold">วันที่สร้าง</th>
-                            <th className="py-4 px-5 font-semibold">ลูกค้า</th>
-                            <th className="py-4 px-5 font-semibold text-right">Request</th>
-                            <th className="py-4 px-5 font-semibold text-right">จัดสรร</th>
-                            <th className="py-4 px-5 font-semibold text-right">ราคา/หน่วย</th>
-                            <th className="py-4 px-5 font-semibold text-right">มูลค่ารวม</th>
-                            <th className="py-4 px-5 font-semibold">สถานะ</th>
-                            <th className="py-4 px-5 font-semibold text-center">การดำเนินการ</th>
+                            <th className="py-4 px-5 font-semibold">{t("orderID")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("subOrderID")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("item")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("type")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("warehouse")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("supplier")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("createdAt")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("customer")}</th>
+                            <th className="py-4 px-5 font-semibold text-right">{t("request")}</th>
+                            <th className="py-4 px-5 font-semibold text-right">{t("allocate")}</th>
+                            <th className="py-4 px-5 font-semibold text-right">{t("pricePerUnit")}</th>
+                            <th className="py-4 px-5 font-semibold text-right">{t("totalValue")}</th>
+                            <th className="py-4 px-5 font-semibold">{t("status")}</th>
+                            <th className="py-4 px-5 font-semibold text-center">{t("actions")}</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 bg-white">
@@ -107,17 +110,13 @@ export function OrderTable() {
                                     <td className="py-3 px-5 text-sm text-slate-700">
                                         <div className="flex items-center gap-1.5 font-medium">
                                             {sub.resolvedWarehouseId || sub.warehouseId}
-                                            {sub.warehouseId === "WH-000" && sub.resolvedWarehouseId && (
-                                                <span className="bg-purple-100 text-purple-700 border border-purple-200 px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wider shadow-sm">ANY</span>
-                                            )}
+
                                         </div>
                                     </td>
                                     <td className="py-3 px-5 text-sm text-slate-700">
                                         <div className="flex items-center gap-1.5 font-medium">
                                             {sub.resolvedSupplierId || sub.supplierId}
-                                            {sub.supplierId === "SP-000" && sub.resolvedSupplierId && (
-                                                <span className="bg-purple-100 text-purple-700 border border-purple-200 px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wider shadow-sm">ANY</span>
-                                            )}
+
                                         </div>
                                     </td>
                                     <td className="py-3 px-5 text-sm text-slate-500 whitespace-nowrap">{sub.createDate}</td>
@@ -159,7 +158,7 @@ export function OrderTable() {
                                             title="แก้ไขการจัดสรร"
                                         >
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                                            แก้ไข
+                                            {t("edit")}
                                         </button>
                                     </td>
                                 </tr>
@@ -171,7 +170,7 @@ export function OrderTable() {
 
             <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 bg-slate-50/80 rounded-b-xl">
                 <span className="text-sm text-slate-500 font-medium">
-                    แสดง <span className="text-slate-700 font-bold">{start + 1}</span>–<span className="text-slate-700 font-bold">{Math.min(start + pageSize, all.length)}</span> จาก <span className="text-slate-700 font-bold">{all.length}</span> รายการ
+                    {t("showing")} <span className="text-slate-700 font-bold">{start + 1}</span>–<span className="text-slate-700 font-bold">{Math.min(start + pageSize, all.length)}</span> จาก <span className="text-slate-700 font-bold">{all.length}</span> รายการ
                 </span>
                 <div className="flex items-center gap-1.5">
                     <button

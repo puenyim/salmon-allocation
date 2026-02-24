@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useAllocationStore } from "../store/allocationStore";
 
 export function Toolbar() {
@@ -11,11 +12,12 @@ export function Toolbar() {
         runAutoAllocation,
         resetAllocation,
         isAutoAllocating,
-        autoAllocateDone,
         getFilteredSubOrders,
+        disabledButton,
     } = useAllocationStore();
 
     const filtered = getFilteredSubOrders();
+    const { t } = useTranslation();
 
     return (
         <div className="card p-4 flex flex-col lg:flex-row items-center justify-between gap-4 mt-2">
@@ -26,7 +28,7 @@ export function Toolbar() {
                     </svg>
                     <input
                         className="input-field w-full pl-9 pr-8"
-                        placeholder="ค้นหา Order ID, Sub Order, Customer, Item..."
+                        placeholder={t("searchPlaceholder")}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -40,7 +42,7 @@ export function Toolbar() {
                     value={filterType}
                     onChange={(e) => setFilterType(e.target.value)}
                 >
-                    <option value="ALL">ทุกประเภท</option>
+                    <option value="ALL">{t("allType")}</option>
                     <option value="EMERGENCY">EMERGENCY</option>
                     <option value="OVERDUE">OVERDUE</option>
                     <option value="DAILY">DAILY</option>
@@ -51,11 +53,11 @@ export function Toolbar() {
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                    <option value="ALL">ทุกสถานะ</option>
-                    <option value="UNALLOCATED">ยังไม่จัดสรร</option>
-                    <option value="PARTIAL">บางส่วน</option>
-                    <option value="ALLOCATED">จัดสรรแล้ว</option>
-                    <option value="CREDIT_EXCEEDED">เกิน Credit</option>
+                    <option value="ALL">{t("allStatus")}</option>
+                    <option value="UNALLOCATED">{t("unallocated")}</option>
+                    <option value="PARTIAL">{t("partial")}</option>
+                    <option value="ALLOCATED">{t("allocated")}</option>
+                    <option value="CREDIT_EXCEEDED">{t("exceeded")}</option>
                 </select>
 
                 <span className="text-sm font-bold text-blue-800 bg-blue-100 px-3 py-1.5 rounded-full border border-blue-200 shadow-sm">{filtered.length} รายการ</span>
@@ -68,12 +70,15 @@ export function Toolbar() {
                     disabled={isAutoAllocating}
                 >
                     <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                    รีเซ็ต
+                    {t("reset")}
                 </button>
                 <button
                     className={`btn btn-primary w-full sm:w-auto flex-1 ${isAutoAllocating ? "opacity-75 cursor-wait" : ""}`}
-                    onClick={runAutoAllocation}
-                    disabled={isAutoAllocating}
+                    onClick={() => {
+                        runAutoAllocation();
+
+                    }}
+                    disabled={isAutoAllocating || disabledButton}
                 >
                     {isAutoAllocating ? (
                         <>
@@ -81,17 +86,12 @@ export function Toolbar() {
                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                             </svg>
-                            กำลังจัดสรร...
-                        </>
-                    ) : autoAllocateDone ? (
-                        <>
-                            <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                            รันใหม่อีกครั้ง
+                            {t("autoAllocating")}
                         </>
                     ) : (
                         <>
                             <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            Auto Allocate
+                            {t("autoAllocate")}
                         </>
                     )}
                 </button>
