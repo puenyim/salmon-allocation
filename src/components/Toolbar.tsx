@@ -22,7 +22,7 @@ export function Toolbar() {
     return (
         <div className="card p-4 flex flex-col lg:flex-row items-center justify-between gap-4 mt-2">
             <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-                <div className="relative flex-1 lg:w-72">
+                <div className="relative flex-1 lg:w-96">
                     <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
                     </svg>

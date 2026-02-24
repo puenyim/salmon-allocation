@@ -45,5 +45,6 @@
   "notEnoughStock": "Stock in {{warehouse}} is not enough (remaining: {{stock}} units)",
   "creditExceededTotal": "Credit limit exceeded for {{customerId}} (remaining credit: ฿{{availableCredit}})",
   "showing": "Showing",
-  "edit": "Edit"
+  "edit": "Edit",
+  "items": "items"
 }

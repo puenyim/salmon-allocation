@@ -45,5 +45,6 @@
   "notEnoughStock": "Stock ใน {{warehouse}} ไม่เพียงพอ (คงเหลือ: {{stock}} หน่วย)",
   "creditExceededTotal": "เกิน Credit Limit ของ {{customerId}} (วงเงินคงเหลือ: ฿{{availableCredit}})",
   "showing": "แสดง",
-  "edit": "แก้ไข"
+  "edit": "แก้ไข",
+  "items": "รายการ"
 }

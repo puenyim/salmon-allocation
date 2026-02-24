@@ -170,7 +170,7 @@ export function OrderTable() {
 
             <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 bg-slate-50/80 rounded-b-xl">
                 <span className="text-sm text-slate-500 font-medium">
-                    {t("showing")} <span className="text-slate-700 font-bold">{start + 1}</span>–<span className="text-slate-700 font-bold">{Math.min(start + pageSize, all.length)}</span> จาก <span className="text-slate-700 font-bold">{all.length}</span> รายการ
+                    {t("showing")} <span className="text-slate-700 font-bold">{start + 1}</span>–<span className="text-slate-700 font-bold">{Math.min(start + pageSize, all.length)}</span> จาก <span className="text-slate-700 font-bold">{all.length}</span> {t("items")}
                 </span>
                 <div className="flex items-center gap-1.5">
                     <button
