@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     runAutoAllocation();
-  }, []);
+  }, [runAutoAllocation]);
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900">

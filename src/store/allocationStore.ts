@@ -37,6 +37,12 @@ export interface Warehouse {
     note?: string;
 }
 
+export interface Supplier {
+    supplierId: string;
+    stock: number;
+    note?: string;
+}
+
 export interface Customer {
     customerId: string;
     creditLimit: number;
@@ -178,7 +184,7 @@ export const useAllocationStore = create<AllocationState>((set, get) => ({
                 // Resolve SP-000 → highest stock real supplier
                 let resolvedSP = sub.supplierId;
                 if (sub.supplierId === "SP-000") {
-                    const bestSP = (mockData.suppliers as any[])
+                    const bestSP = (mockData.suppliers as Supplier[])
                         .filter((s) => s.supplierId !== "SP-000")
                         .sort((a, b) => b.stock - a.stock)[0];
                     if (bestSP) resolvedSP = bestSP.supplierId;
